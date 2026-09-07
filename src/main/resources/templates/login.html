@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login &middot; ScholarSync</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}" href="/css/app.css"/>
+    <script th:src="@{/js/auth.js}" src="/js/auth.js" defer></script>
+</head>
+<body>
+<header>
+    <h1>ScholarSync</h1>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+        <a href="/swagger-ui.html">API Docs</a>
+    </nav>
+</header>
+<main>
+    <div class="card">
+        <h2>Sign in</h2>
+        <form onsubmit="submitJson(event, '/api/auth/login', 'login-result')">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required/>
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" required/>
+            <button type="submit">Login</button>
+        </form>
+        <pre class="result" id="login-result"></pre>
+    </div>
+</main>
+</body>
+</html>

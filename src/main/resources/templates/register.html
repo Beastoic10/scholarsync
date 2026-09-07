@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Register &middot; ScholarSync</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}" href="/css/app.css"/>
+    <script th:src="@{/js/auth.js}" src="/js/auth.js" defer></script>
+</head>
+<body>
+<header>
+    <h1>ScholarSync</h1>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+        <a href="/swagger-ui.html">API Docs</a>
+    </nav>
+</header>
+<main>
+    <div class="card">
+        <h2>Create an account</h2>
+        <form onsubmit="submitJson(event, '/api/auth/register', 'register-result')">
+            <label for="fullName">Full name</label>
+            <input id="fullName" name="fullName" required/>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required/>
+            <label for="password">Password (min 8 characters)</label>
+            <input id="password" name="password" type="password" minlength="8" required/>
+            <label for="role">Role</label>
+            <select id="role" name="role">
+                <option value="STUDENT">Student</option>
+                <option value="TEACHER">Teacher / Advisor</option>
+                <option value="CO_AUTHOR">Co-author</option>
+            </select>
+            <label for="institution">Institution</label>
+            <input id="institution" name="institution"/>
+            <button type="submit">Register</button>
+        </form>
+        <pre class="result" id="register-result"></pre>
+    </div>
+</main>
+</body>
+</html>

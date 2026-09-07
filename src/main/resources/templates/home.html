@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ScholarSync</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}" href="/css/app.css"/>
+</head>
+<body>
+<header>
+    <h1>ScholarSync</h1>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+        <a href="/swagger-ui.html">API Docs</a>
+    </nav>
+</header>
+<main>
+    <div class="card">
+        <h2 th:text="${appName}">ScholarSync</h2>
+        <p class="muted">Real-time academic research collaboration and workflow engine.</p>
+    </div>
+    <div class="grid">
+        <div class="card">
+            <h3>Kanban Engine</h3>
+            <p class="muted">Proposed &rarr; Literature Review &rarr; Experimentation &rarr; Under Advisor Review &rarr; Approved.</p>
+        </div>
+        <div class="card">
+            <h3>Literature Vault</h3>
+            <p class="muted">DOIs, annotations and multi-format citation export (IEEE, APA, BibTeX).</p>
+        </div>
+        <div class="card">
+            <h3>Submission Locker</h3>
+            <p class="muted">Immutable artifact versions with status-tagged advisor feedback.</p>
+        </div>
+        <div class="card">
+            <h3>Live Sync</h3>
+            <p class="muted">STOMP over WebSocket broadcasts board mutations without polling.</p>
+        </div>
+    </div>
+</main>
+</body>
+</html>

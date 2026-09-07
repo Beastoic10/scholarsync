@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: scholarsync
+  profiles:
+    active: dev
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+scholarsync:
+  jwt:
+    secret: ${SCHOLARSYNC_JWT_SECRET:change-me-in-production-scholarsync-dev-secret-key-256bit}
+    expiration-minutes: 120
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScholarSync — Academic Research Collaboration & Workflow Engine</title>
+  <meta name="description" content="Real-Time Academic Research Collaboration & Workflow Engine. Milestone dashboard with JWT authentication and Kanban workflow preview.">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'><path d='M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z'/></svg>">
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="container nav-bar">
+      <a href="/" class="brand" id="brand-link">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+          </svg>
+        </div>
+        <div>
+          <span class="brand-name">ScholarSync</span>
+          <span class="brand-tag">v0.1 Milestone</span>
+        </div>
+      </a>
+
+      <div class="nav-links">
+        <div id="server-health-badge" class="status-badge">
+          <span class="status-dot"></span>
+          <span id="server-health-text">Checking...</span>
+        </div>
+
+        <a href="/swagger-ui.html" target="_blank" class="nav-link-btn" id="nav-swagger-btn" title="Open Swagger API documentation">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+          </svg>
+          Swagger Docs
+        </a>
+
+        <a href="/h2-console" target="_blank" class="nav-link-btn" id="nav-h2-btn" title="Open in-memory H2 database console">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4zm0 2c3.87 0 6 1.5 6 2s-2.13 2-6 2-6-1.5-6-2 2.13-2 6-2zM6 9.4c1.47.85 3.65 1.35 6 1.35s4.53-.5 6-1.35V11c0 .5-2.13 2-6 2s-6-1.5-6-2V9.4zm0 4.4c1.47.85 3.65 1.35 6 1.35s4.53-.5 6-1.35V15c0 .5-2.13 2-6 2s-6-1.5-6-2v-1.2zm0 4.4c1.47.85 3.65 1.35 6 1.35s4.53-.5 6-1.35V19c0 .5-2.13 2-6 2s-6-1.5-6-2v-1.2z"/>
+          </svg>
+          H2 DB
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Body -->
+  <main>
+    <div class="container">
+      
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-pill">
+          <span>✨ 30% Milestone Deliverable</span>
+        </div>
+        <h1>Academic Research <span class="gradient-text">Collaboration Engine</span></h1>
+        <p>A unified platform for researchers, advisors, and co-authors to manage academic workflows, task lifecycles, and peer review pipelines.</p>
+      </section>
+
+      <!-- AUTHENTICATION VIEW -->
+      <section id="auth-section" class="auth-wrapper">
+        <div class="glass-card">
+          <!-- Tabs -->
+          <div class="tab-header">
+            <button class="tab-btn active" data-tab="login" id="tab-login-btn">Sign In</button>
+            <button class="tab-btn" data-tab="register" id="tab-register-btn">Create Account</button>
+          </div>
+
+          <!-- Login Form -->
+          <form id="login-form">
+            <div class="form-group">
+              <label for="login-email">Email Address</label>
+              <input type="email" id="login-email" placeholder="ada@university.edu" required autocomplete="username">
+            </div>
+            <div class="form-group">
+              <label for="login-password">Password</label>
+              <input type="password" id="login-password" placeholder="••••••••••••" required autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn-primary" id="login-submit-btn">
+              <span>Sign In</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-7.85-1.42 1.42L16.86 11H5v2z"/>
+              </svg>
+            </button>
+          </form>
+
+          <!-- Register Form -->
+          <form id="register-form" class="hidden">
+            <div class="form-group">
+              <label for="reg-fullname">Full Name</label>
+              <input type="text" id="reg-fullname" placeholder="Dr. Ada Lovelace" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="reg-email">University Email</label>
+              <input type="email" id="reg-email" placeholder="ada@university.edu" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="reg-password">Password</label>
+              <input type="password" id="reg-password" placeholder="SecurePass123" required autocomplete="new-password">
+            </div>
+
+            <div class="form-group">
+              <label>Select Role</label>
+              <div class="role-grid">
+                <label class="role-option">
+                  <input type="radio" name="reg-role" value="TEACHER" checked>
+                  <div class="role-card">
+                    <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+                    <span class="role-title">Teacher</span>
+                  </div>
+                </label>
+
+                <label class="role-option">
+                  <input type="radio" name="reg-role" value="STUDENT">
+                  <div class="role-card">
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    <span class="role-title">Student</span>
+                  </div>
+                </label>
+
+                <label class="role-option">
+                  <input type="radio" name="reg-role" value="CO_AUTHOR">
+                  <div class="role-card">
+                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    <span class="role-title">Co-Author</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary" id="register-submit-btn">
+              <span>Create Account</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-7.85-1.42 1.42L16.86 11H5v2z"/>
+              </svg>
+            </button>
+          </form>
+
+          <!-- Quick Test Accounts Helper -->
+          <div class="demo-fill-box">
+            <span>Quick-fill demo:</span>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="btn-demo-chip" data-role="TEACHER">Teacher</button>
+              <button type="button" class="btn-demo-chip" data-role="STUDENT">Student</button>
+              <button type="button" class="btn-demo-chip" data-role="CO_AUTHOR">Co-Author</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AUTHENTICATED DASHBOARD VIEW -->
+      <section id="dashboard-section" class="dashboard-view hidden">
+        
+        <!-- User Welcome Banner -->
+        <div class="glass-card user-banner">
+          <div class="user-profile">
+            <div class="user-avatar" id="user-avatar">A</div>
+            <div class="user-meta">
+              <h2 id="user-greeting">Welcome to ScholarSync</h2>
+              <p id="user-subtext" style="color: var(--text-muted); font-size: 0.85rem;">Authenticated Session</p>
+              <span id="user-role-badge" class="user-role-badge role-teacher">TEACHER</span>
+            </div>
+          </div>
+          <div>
+            <button id="logout-btn" class="btn-secondary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.89-2-2-2z"/>
+              </svg>
+              Sign Out
+            </button>
+          </div>
+        </div>
+
+        <!-- Research Workflow Kanban Pipeline -->
+        <div class="workflow-section">
+          <div class="section-header">
+            <h3 class="section-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#818CF8">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H7v-4h4v4zm0-6H7V7h4v4zm6 6h-4v-8h4v8z"/>
+              </svg>
+              Research Task Lifecycle (State Pattern Pipeline)
+            </h3>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">JPA Entity Model: ResearchTask</span>
+          </div>
+
+          <div class="pipeline-grid">
+            <!-- Col 1: Proposed -->
+            <div class="pipeline-col">
+              <div class="col-header">
+                <span class="col-name">1. Proposed</span>
+                <span class="col-count">1</span>
+              </div>
+              <div class="task-card">
+                <span class="task-tag tag-active">PROPOSED</span>
+                <h4 class="task-title">LLM Transformer Attention Analysis</h4>
+                <p class="task-desc">Investigate memory compression techniques for long-context windows.</p>
+              </div>
+            </div>
+
+            <!-- Col 2: Lit Review -->
+            <div class="pipeline-col">
+              <div class="col-header">
+                <span class="col-name">2. Literature Review</span>
+                <span class="col-count">1</span>
+              </div>
+              <div class="task-card">
+                <span class="task-tag tag-review">LITERATURE_REVIEW</span>
+                <h4 class="task-title">Survey on Decentralized Consensus</h4>
+                <p class="task-desc">Comparative analysis of Byzantine fault tolerant protocols.</p>
+              </div>
+            </div>
+
+            <!-- Col 3: Experimentation -->
+            <div class="pipeline-col">
+              <div class="col-header">
+                <span class="col-name">3. Experimentation</span>
+                <span class="col-count">1</span>
+              </div>
+              <div class="task-card">
+                <span class="task-tag tag-active">EXPERIMENTATION</span>
+                <h4 class="task-title">Benchmarking Graph Neural Networks</h4>
+                <p class="task-desc">Evaluating inference latency on distributed GPU clusters.</p>
+              </div>
+            </div>
+
+            <!-- Col 4: Advisor Review -->
+            <div class="pipeline-col">
+              <div class="col-header">
+                <span class="col-name">4. Advisor Review</span>
+                <span class="col-count">1</span>
+              </div>
+              <div class="task-card">
+                <span class="task-tag tag-review">UNDER_ADVISOR_REVIEW</span>
+                <h4 class="task-title">Draft Methodology Section</h4>
+                <p class="task-desc">Advisor feedback pending on statistical sampling bounds.</p>
+              </div>
+            </div>
+
+            <!-- Col 5: Approved -->
+            <div class="pipeline-col">
+              <div class="col-header">
+                <span class="col-name">5. Approved</span>
+                <span class="col-count">1</span>
+              </div>
+              <div class="task-card">
+                <span class="task-tag tag-done">APPROVED</span>
+                <h4 class="task-title">Ethics & IRB Approval</h4>
+                <p class="task-desc">Human subjects protocol certified by institutional board.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- JWT Inspector Card -->
+        <div class="token-box">
+          <div class="token-header">
+            <span class="token-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#6366F1">
+                <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+              </svg>
+              Active JWT Bearer Token (Stateless Authentication)
+            </span>
+            <button id="copy-token-btn" class="btn-secondary" style="padding: 4px 12px; font-size: 0.75rem;">
+              Copy Token
+            </button>
+          </div>
+          <div id="token-display" class="token-display">Generating token...</div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>ScholarSync &copy; 2026 · Academic Research Collaboration & Workflow Engine · Built with Spring Boot 3 & Java 17</p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

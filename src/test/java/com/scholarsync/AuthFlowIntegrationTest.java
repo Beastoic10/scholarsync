@@ -56,6 +56,34 @@ class AuthFlowIntegrationTest {
     }
 
     @Test
+    void malformedBodyIsRejectedWithBadRequest() throws Exception {
+        mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"email\":"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Bad Request"));
+    }
+
+    @Test
+    void unknownRoleIsRejectedWithBadRequest() throws Exception {
+        String registration =
+                """
+                {
+                  "email": "grace@university.edu",
+                  "password": "supersecret1",
+                  "fullName": "Grace Hopper",
+                  "role": "ADMIN"
+                }
+                """;
+
+        mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(registration))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").isNotEmpty());
+    }
+
+    @Test
     void protectedEndpointRejectsAnonymousAccess() throws Exception {
         mockMvc.perform(get("/api/users/me")).andExpect(status().isUnauthorized());
     }

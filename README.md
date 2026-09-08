@@ -1,4 +1,4 @@
-# ScholarSync — 30% Milestone
+# ScholarSync — 
 
 Real-Time Academic Research Collaboration & Workflow Engine.
 This milestone covers: project skeleton, database wiring, and two working,
